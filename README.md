@@ -24,7 +24,7 @@ moyi'yi çalıştırmak için aşağıdaki araçların yüklü olması gerekir:
 1. projeyi klonlayın:
 
 ```
-git clone https://github.com/<kullanici_adi>/moyi.git
+git clone https://github.com/ademavsar/moyi
 ```
 
 2. proje dizinine gidin:
