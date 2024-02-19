@@ -1,0 +1,8 @@
+Flask==2.0.1  		# Flask'ın mevcut en son stabil sürümüne güncelleyin
+Werkzeug==2.0.1 	# Flask ile uyumlu Werkzeug sürümü
+Jinja2==3.0.3  		# Flask ile uyumlu Jinja2 sürümü
+itsdangerous==2.0.1  	# Flask ile uyumlu itsdangerous sürümü
+click==8.0.3  		# Flask ile uyumlu click sürümü
+MarkupSafe==2.0.1  	# Flask ile uyumlu MarkupSafe sürümü
+Pillow==8.3.1  		# PIL kütüphanesi için güncel Pillow sürümü
+pystray==0.17.3  	# Sistem tepsisi ikonu için pystray kütüphanesi

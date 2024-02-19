@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>moyi</title>
+    <style>
+        body { background-color: #3c3c3c; color: white; font-family: Arial, sans-serif; text-align: center; padding-top: 10px; }
+        #videoContainer { position: relative; display: inline-block; }
+        video { cursor: pointer; width: 640px; }
+        #indicator { position: absolute; right: 10px; top: 10px; color: #FFC300; font-size: 14px; }
+        #controls { margin-top: 20px; display: flex; justify-content: center; align-items: center; }
+        .btn, .toggle-btn { cursor: pointer; background-color: transparent; border: none; margin: 0 5px; outline: none; display: flex; align-items: center; }
+        .btn img, .toggle-btn img { height: 36px; }
+        #answerContainer { display: flex; justify-content: center; }
+        #answerBox { display: none; margin-top: 25px; padding: 40px 0; background-color: #444; border-radius: 5px; width: 640px; height: 30px; font-size: 1.3em; color: white; }
+        #answerBox::selection { background-color: black; }
+    </style>
+</head>
+<body>
+    {% if video %}
+        <div id="videoContainer">
+            <video id="videoPlayer" autoplay muted>
+                <source src="{{ url_for('video', filename=video) }}" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
+            </video>
+            <div id="indicator">{{ current }}/{{ total }}</div>
+        </div>
+        <div id="controls">
+            <button onclick="window.location.href='/?video_index={{ prev_index }}'" class="btn">
+                <img src="{{ url_for('static', filename='left.svg') }}" alt="Önceki">
+            </button>
+
+            <button onclick="window.location.href='/?video_index={{ next_index }}'" class="btn">
+                <img src="{{ url_for('static', filename='right.svg') }}" alt="Sonraki">
+            </button>
+
+            &emsp;
+
+            <button onclick="togglePlay()" class="btn" id="toggleButton">
+                <img src="{{ url_for('static', filename='cc.svg') }}" alt="Cevabı Göster" id="toggleImage">
+            </button>
+
+            &emsp;
+
+            <button id="prevSubtitle" class="btn" onclick="prevSubtitle()">
+                <img src="{{ url_for('static', filename='1.svg') }}" alt="Önceki Alt Yazı">
+            </button>
+
+            <button id="nextSubtitle" class="btn" onclick="nextSubtitle()">
+                <img src="{{ url_for('static', filename='2.svg') }}" alt="Sonraki Alt Yazı">
+            </button>
+
+            &emsp;
+
+            <button id="green" class="toggle-btn" onclick="window.location.href='/hide_video/{{ current - 1 }}'">
+                <img src="{{ url_for('static', filename='run.svg') }}" alt="Green">
+            </button>
+
+            <button id="red" class="toggle-btn" onclick="nextVideo()">
+                <img src="{{ url_for('static', filename='again.svg') }}" alt="Red">
+            </button>
+        </div>
+        <div id="answerContainer">
+            <div id="answerBox"></div>
+        </div>
+    {% endif %}
+    <script>
+        const video = document.getElementById('videoPlayer');
+        const answerBox = document.getElementById('answerBox');
+        let subtitles = {{ subtitles|tojson }};
+        let currentSubtitleIndex = 0;
+
+        video.onclick = function() {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        };
+
+        function nextVideo() {
+            var currentVideoIndex = {{ current - 1 }};
+            var nextVideoIndex = currentVideoIndex + 1;
+            window.location.href = '/?video_index=' + nextVideoIndex;
+        }
+
+        function updateSubtitles() {
+            const currentTime = video.currentTime;
+            const currentSubtitle = subtitles.find(sub => currentTime >= sub.start && currentTime <= sub.end);
+            answerBox.textContent = currentSubtitle ? currentSubtitle.text : '';
+            currentSubtitleIndex = subtitles.indexOf(currentSubtitle);
+
+            if (video.ended && subtitles.length > 0) {
+                const lastSubtitle = subtitles[subtitles.length - 1];
+                answerBox.textContent = lastSubtitle.text;
+            }
+        }
+
+        function prevSubtitle() {
+            if (currentSubtitleIndex > 0) {
+                video.currentTime = subtitles[currentSubtitleIndex - 1].start;
+            }
+        }
+
+        function nextSubtitle() {
+            if (currentSubtitleIndex < subtitles.length - 1) {
+                video.currentTime = subtitles[currentSubtitleIndex + 1].start;
+            }
+        }
+
+        video.addEventListener('timeupdate', updateSubtitles);
+        video.addEventListener('ended', updateSubtitles);
+
+        window.onload = function() {
+            const answerVisibility = localStorage.getItem('answerVisibility') === 'true';
+            answerBox.style.display = answerVisibility ? 'block' : 'none';
+            const toggleImage = document.getElementById('toggleImage');
+            toggleImage.src = answerVisibility ? "{{ url_for('static', filename='cc_on.svg') }}" : "{{ url_for('static', filename='cc.svg') }}";
+            video.muted = false;
+        };
+
+        function togglePlay() {
+            const isVisible = answerBox.style.display === 'block';
+            answerBox.style.display = isVisible ? 'none' : 'block';
+            const toggleImage = document.getElementById('toggleImage');
+            toggleImage.src = isVisible ? "{{ url_for('static', filename='cc.svg') }}" : "{{ url_for('static', filename='cc_on.svg') }}";
+            localStorage.setItem('answerVisibility', !isVisible);
+        }
+    </script>
+</body>
+</html>
