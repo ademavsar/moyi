@@ -30,7 +30,7 @@
                 <source src="{{ url_for('video', filename=video) }}" type="video/mp4">
                 Tarayıcınız video etiketini desteklemiyor.
             </video>
-            <div id="indicator">{{ current }}/{{ total }}</div>
+            <div id="indicator">{{ video.split('.')[0] }}/{{ total }}</div>
         </div>
         <div id="controls">
             <button onclick="window.location.href='/?video_index={{ prev_index }}'" class="btn">
