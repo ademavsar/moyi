@@ -48,7 +48,7 @@ pip install -r requirements.txt
 python moyi.py
 ```
 
-moyi.py'yi çift tıklayarak da çalıştırabilirsiniz. 
+``moyi.py``'yi çift tıklayarak da çalıştırabilirsiniz. 
 
 ## kullanım
 

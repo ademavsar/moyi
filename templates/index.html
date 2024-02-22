@@ -66,6 +66,7 @@
             <button id="red" class="toggle-btn" onclick="nextVideo()">
                 <img src="{{ url_for('static', filename='again.svg') }}" alt="Red">
             </button>
+                                   
         </div>
         <div id="answerContainer">
             <div id="answerBox"></div>
@@ -76,7 +77,7 @@
         const answerBox = document.getElementById('answerBox');
         let subtitles = {{ subtitles|tojson }};
         let currentSubtitleIndex = 0;
-
+    
         video.onclick = function() {
             if (video.paused) {
                 video.play();
@@ -84,40 +85,46 @@
                 video.pause();
             }
         };
-
+    
         function nextVideo() {
             var currentVideoIndex = {{ current - 1 }};
             var nextVideoIndex = currentVideoIndex + 1;
             window.location.href = '/?video_index=' + nextVideoIndex;
         }
-
+    
         function updateSubtitles() {
             const currentTime = video.currentTime;
             const currentSubtitle = subtitles.find(sub => currentTime >= sub.start && currentTime <= sub.end);
-            answerBox.textContent = currentSubtitle ? currentSubtitle.text : '';
-            currentSubtitleIndex = subtitles.indexOf(currentSubtitle);
-
-            if (video.ended && subtitles.length > 0) {
+            if (currentSubtitle) {
+                answerBox.textContent = currentSubtitle.text;
+                currentSubtitleIndex = subtitles.indexOf(currentSubtitle);
+            }
+    
+            if (video.ended) {
                 const lastSubtitle = subtitles[subtitles.length - 1];
                 answerBox.textContent = lastSubtitle.text;
+                currentSubtitleIndex = subtitles.length - 1;
             }
         }
-
+    
         function prevSubtitle() {
             if (currentSubtitleIndex > 0) {
                 video.currentTime = subtitles[currentSubtitleIndex - 1].start;
             }
         }
-
+    
         function nextSubtitle() {
-            if (currentSubtitleIndex < subtitles.length - 1) {
+            if (video.ended && currentSubtitleIndex < subtitles.length - 1) {
+                currentSubtitleIndex++;
+                video.currentTime = subtitles[currentSubtitleIndex].start;
+            } else if (currentSubtitleIndex < subtitles.length - 1) {
                 video.currentTime = subtitles[currentSubtitleIndex + 1].start;
             }
         }
-
+    
         video.addEventListener('timeupdate', updateSubtitles);
         video.addEventListener('ended', updateSubtitles);
-
+    
         window.onload = function() {
             const answerVisibility = localStorage.getItem('answerVisibility') === 'true';
             answerBox.style.display = answerVisibility ? 'block' : 'none';
@@ -125,7 +132,7 @@
             toggleImage.src = answerVisibility ? "{{ url_for('static', filename='cc_on.svg') }}" : "{{ url_for('static', filename='cc.svg') }}";
             video.muted = false;
         };
-
+    
         function togglePlay() {
             const isVisible = answerBox.style.display === 'block';
             answerBox.style.display = isVisible ? 'none' : 'block';
