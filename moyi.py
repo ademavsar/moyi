@@ -1,20 +1,24 @@
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 import os
-import re
-import webbrowser
-import threading
-from PIL import Image
-import pystray
-from pystray import MenuItem as item
-import requests
 
 app = Flask(__name__)
 
 VIDEO_FOLDER = os.path.join(os.path.dirname(__file__), 'deck')
-videos = sorted([f for f in os.listdir(VIDEO_FOLDER) if f.endswith('.mkv')])
+# Desteklenen video formatları listesi
+supported_video_formats = ['.mkv', '.mp4', '.avi']
+
+def get_video_files():
+    video_files = []
+    for f in os.listdir(VIDEO_FOLDER):
+        if any(f.endswith(format) for format in supported_video_formats):
+            video_files.append(f)
+    return sorted(video_files)
+
+videos = get_video_files()
 
 def load_subtitles(video_file):
-    subtitle_file = video_file.replace('.mkv', '.srt')
+    # .mkv yerine video dosyasının uzantısını kaldır
+    subtitle_file = os.path.splitext(video_file)[0] + '.srt'
     subtitles = []
     try:
         with open(os.path.join(VIDEO_FOLDER, subtitle_file), 'r', encoding='utf-8') as file:
@@ -36,14 +40,6 @@ def convert_to_seconds(time_str):
     hours, minutes, seconds = map(int, parts[:3])
     milliseconds = int(parts[3]) if len(parts) > 3 else 0
     return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000.0
-
-@app.route('/shutdown', methods=['POST'])
-def shutdown():
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-    func()
-    return 'Server shutting down...'
 
 @app.route('/')
 def index():
@@ -69,21 +65,5 @@ def hide_video(video_index):
 def video(filename):
     return send_from_directory(VIDEO_FOLDER, filename)
 
-def open_browser():
-    webbrowser.open_new('http://127.0.0.1:5000/')
-
-def on_exit(icon, item):
-    icon.stop()
-    requests.post('http://127.0.0.1:5000/shutdown')
-    os._exit(0)
-
-def setup_tray_icon():
-    icon_image = Image.open(os.path.join(os.path.dirname(__file__), 'static/favicon/favicon.ico'))
-    menu = (item('Exit', on_exit),)
-    icon = pystray.Icon("moyi", icon_image, "moyi Application", menu)
-    icon.run()
-
 if __name__ == '__main__':
-    threading.Thread(target=open_browser).start()
-    threading.Thread(target=lambda: app.run(debug=False)).start()
-    setup_tray_icon()
+    app.run(debug=False)

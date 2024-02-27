@@ -19,8 +19,8 @@
         .btn, .toggle-btn { cursor: pointer; background-color: transparent; border: none; margin: 0 5px; outline: none; display: flex; align-items: center; }
         .btn img, .toggle-btn img { height: 36px; }
         #answerContainer { display: flex; justify-content: center; }
-        #answerBox { display: none; margin-top: 25px; padding: 40px 0; background-color: #444; border-radius: 5px; width: 640px; height: 30px; font-size: 1.3em; color: white; }
-        #answerBox::selection { background-color: black; }
+        #answerBox { display: none; margin-top: 25px; padding: 40px 0; background-color: #444; border-radius: 5px; width: 640px; height: 30px; font-size: 16px; color: white; }
+        #answerBox::selection { background-color: #181818; }
     </style>
 </head>
 <body>
@@ -114,16 +114,19 @@
         }
     
         function nextSubtitle() {
-            if (video.ended && currentSubtitleIndex < subtitles.length - 1) {
-                currentSubtitleIndex++;
-                video.currentTime = subtitles[currentSubtitleIndex].start;
-            } else if (currentSubtitleIndex < subtitles.length - 1) {
+            if (currentSubtitleIndex < subtitles.length - 1) {
                 video.currentTime = subtitles[currentSubtitleIndex + 1].start;
             }
         }
     
-        video.addEventListener('timeupdate', updateSubtitles);
-        video.addEventListener('ended', updateSubtitles);
+        function syncSubtitles() {
+            updateSubtitles();
+            requestAnimationFrame(syncSubtitles);
+        }
+    
+        video.addEventListener('play', () => {
+            requestAnimationFrame(syncSubtitles);
+        });
     
         window.onload = function() {
             const answerVisibility = localStorage.getItem('answerVisibility') === 'true';
