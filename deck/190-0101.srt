@@ -1,5 +1,0 @@
-1
-00:00:00,000 --> 00:00:04,002
-Welcome back to the world. Grab a spoon.
-
-

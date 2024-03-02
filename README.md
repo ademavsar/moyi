@@ -1,60 +1,57 @@
-# moyi: minimal video flascard app
-anki ve benzeri flascard uygulamalarında videolu flashcard'lar oluşturamayınca (bu uygulamalar böyle bir çalışma için sizi çok sınırlıyor) basit bir çözüm olarak moyi'yi geliştirdim. izlediğiniz herhangi bir videoyu, alt yazıları referans alarak kesip videolu flashcard'larınızı oluşturabilir ve dil öğrenim metodolojinizi çok daha üst seviyelere çıkarabilirsiniz.
+# [moyi: minimal video flascard app](https://github.com/ademavsar/moyi)
+dil öğrenimim için anki ve benzeri flascard uygulamalarında videolu flashcard'lar oluşturamayınca (bu uygulamalar böyle bir çalışma için sizi çok sınırlıyor) basit bir çözüm olarak moyi'yi geliştirdim. 
 
-**[split-video-by-srt-using-ffmpeg](https://github.com/ademavsar/split-video-by-srt-using-ffmpeg)** ile video bölümleme yapabilir ve oluşturduğunuz dosyaları "deck" klasörüne taşıyarak kendi çalışma destenizi oluşturabilirsiniz.
+desteleri oluşturmak için yazdığım **[split-video-by-srt-using-ffmpeg](https://github.com/ademavsar/split-video-by-srt-using-ffmpeg)** scripti ile video bölümleme yapabilir ve oluşturduğunuz dosyaları "deck" klasörüne taşıyarak kendi çalışma destenizi oluşturabilirsiniz.
+## girizgâh
+moyi, video içerikli flashcard'lar aracılığıyla dil öğrenmeyi eğlenceli ve etkili bir hale getiren, yerel sunucuda çalışan basit bir uygulamadır. 
 
-daha iyi anlayabilmeniz ve örnek olması için, friends'in ilk bölümüne ait oluşturduğum desteyi de paylaştım. 
+öğrenim sürecinizi görsel ve işitsel materyallerle zenginleştirerek dil öğrenim metodolojinizi çok daha üst seviyelere çıkarabilirsiniz.
 
-# girizgâh
+## demo
+![demo](/static/moyi.gif)
 
-moyi, video içerikli flashcard'lar aracılığıyla dil öğrenmeyi eğlenceli ve etkili bir hale getiren bir uygulamadır. öğrenim sürecinizi görsel ve işitsel materyallerle zenginleştirerek dil öğrenimini daha interaktif ve keyifli bir deneyime dönüştürür.
-
-# özellikler
-
+## özellikler
 - kendi videolarınız ve alt yazılarınızla özelleştirilebilir dil öğrenme deneyimi
 - i̇lerlemenizi takip edebileceğiniz sıralı video flashcard'lar
 - kullanıcı dostu arayüz, minimal tasarım
 
-## önkoşullar
-
+## ön koşullar
 moyi'yi çalıştırmak için aşağıdaki araçların yüklü olması gerekir:
 
 - python 3.6 veya üstü
 - pip (python paket yöneticisi)
 
 ## kurulum
-
 1. projeyi klonlayın:
 
-```
+```bash
 git clone https://github.com/ademavsar/moyi
 ```
 
 2. proje dizinine gidin:
 
-```
+```bash
 cd moyi
 ```
 
 3. gerekli python paketlerini yükleyin:
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
 4. uygulamayı çalıştırın:
 
-```
+```bash
 python moyi.py
 ```
 
-``moyi.py``'yi çift tıklayarak da çalıştırabilirsiniz. 
-
+veya ``moyi.py``'yi çalıştırın.
 ## kullanım
+moyi.py dosyasını çalıştırdıktan sonra ``http://127.0.0.1:5000`` adresine gidin. önceki/sonraki video butonları, alt yazı metnini göster/gizle butonu, önceki/sonraki alt yazıya geçiş butonları ve iki adet daha buton göreceksiniz. 
 
-uygulama çalıştığında, varsayılan web tarayıcınız otomatik olarak açılır ve moyi'nin ana sayfasına yönlendirilirsiniz. videolar arasında gezinmek, cevapları göstermek/gizlemek ve videoları değerlendirmek için ekrandaki kontrolleri kullanabilirsiniz.
+o videoflashcard sizin için tamamsa "green", değilse ve daha sonra görmek için "red" butona tıklayın.
 
-## güncelleme notları
-
-- requirements.txt güncellendi
-- indicator (gösterge), geçerli video sayısı yerine video ismi (uzantısız) olacak şekilde güncellendi
+oldukça basit. iyi çalışmalar.
+## not
+modern tarayıcılardaki otomatik media oynatma politikası, uygulama için problem çıkarabilir. site (``http://127.0.0.1:5000``) ayarlarını düzgün yapılandırdığınızdan emin olun!

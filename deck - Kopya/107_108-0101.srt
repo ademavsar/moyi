@@ -1,0 +1,10 @@
+1
+00:00:00,000 --> 00:00:03,377
+La la la something
+With string
+
+2
+00:00:03,545 --> 00:00:05,420
+I'm all better now.
+
+

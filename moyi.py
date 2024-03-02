@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 import os
-import subprocess
 
 app = Flask(__name__)
 
@@ -67,5 +66,4 @@ def video(filename):
     return send_from_directory(VIDEO_FOLDER, filename)
 
 if __name__ == '__main__':
-    subprocess.Popen(["C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"])
     app.run(debug=False)
