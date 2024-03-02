@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 import os
+import subprocess
 
 app = Flask(__name__)
 
@@ -45,7 +46,7 @@ def convert_to_seconds(time_str):
 def index():
     video_index = request.args.get('video_index', 0, type=int)
     if not videos:
-        return render_template('done.html', image_file='tebriks.gif')
+        return render_template('done.html', image_file='done.gif')
     video_index = video_index % len(videos)
     video = videos[video_index]
     subtitles = load_subtitles(video)
@@ -66,4 +67,5 @@ def video(filename):
     return send_from_directory(VIDEO_FOLDER, filename)
 
 if __name__ == '__main__':
+    subprocess.Popen(["C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"])
     app.run(debug=False)

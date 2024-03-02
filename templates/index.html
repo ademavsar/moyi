@@ -34,37 +34,37 @@
         </div>
         <div id="controls">
             <button onclick="window.location.href='/?video_index={{ prev_index }}'" class="btn">
-                <img src="{{ url_for('static', filename='left.svg') }}" alt="Önceki">
+                <img src="{{ url_for('static', filename='prev_index.svg') }}" alt="Önceki">
             </button>
 
             <button onclick="window.location.href='/?video_index={{ next_index }}'" class="btn">
-                <img src="{{ url_for('static', filename='right.svg') }}" alt="Sonraki">
+                <img src="{{ url_for('static', filename='next_index.svg') }}" alt="Sonraki">
             </button>
 
             &emsp;
 
             <button onclick="togglePlay()" class="btn" id="toggleButton">
-                <img src="{{ url_for('static', filename='cc.svg') }}" alt="Cevabı Göster" id="toggleImage">
+                <img src="{{ url_for('static', filename='cc_off.svg') }}" alt="Cevabı Göster" id="toggleImage">
             </button>
 
             &emsp;
 
             <button id="prevSubtitle" class="btn" onclick="prevSubtitle()">
-                <img src="{{ url_for('static', filename='1.svg') }}" alt="Önceki Alt Yazı">
+                <img src="{{ url_for('static', filename='prevSubtitle.svg') }}" alt="Önceki Alt Yazı">
             </button>
 
             <button id="nextSubtitle" class="btn" onclick="nextSubtitle()">
-                <img src="{{ url_for('static', filename='2.svg') }}" alt="Sonraki Alt Yazı">
+                <img src="{{ url_for('static', filename='nextSubtitle.svg') }}" alt="Sonraki Alt Yazı">
             </button>
 
             &emsp;
 
             <button id="green" class="toggle-btn" onclick="window.location.href='/hide_video/{{ current - 1 }}'">
-                <img src="{{ url_for('static', filename='run.svg') }}" alt="Green">
+                <img src="{{ url_for('static', filename='hide_video.svg') }}" alt="Green">
             </button>
 
             <button id="red" class="toggle-btn" onclick="nextVideo()">
-                <img src="{{ url_for('static', filename='again.svg') }}" alt="Red">
+                <img src="{{ url_for('static', filename='nextVideo.svg') }}" alt="Red">
             </button>
                                    
         </div>
@@ -132,7 +132,7 @@
             const answerVisibility = localStorage.getItem('answerVisibility') === 'true';
             answerBox.style.display = answerVisibility ? 'block' : 'none';
             const toggleImage = document.getElementById('toggleImage');
-            toggleImage.src = answerVisibility ? "{{ url_for('static', filename='cc_on.svg') }}" : "{{ url_for('static', filename='cc.svg') }}";
+            toggleImage.src = answerVisibility ? "{{ url_for('static', filename='cc_on.svg') }}" : "{{ url_for('static', filename='cc_off.svg') }}";
             video.muted = false;
         };
     
@@ -140,8 +140,17 @@
             const isVisible = answerBox.style.display === 'block';
             answerBox.style.display = isVisible ? 'none' : 'block';
             const toggleImage = document.getElementById('toggleImage');
-            toggleImage.src = isVisible ? "{{ url_for('static', filename='cc.svg') }}" : "{{ url_for('static', filename='cc_on.svg') }}";
+            toggleImage.src = isVisible ? "{{ url_for('static', filename='cc_off.svg') }}" : "{{ url_for('static', filename='cc_on.svg') }}";
             localStorage.setItem('answerVisibility', !isVisible);
+        }
+        
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(function(err) {
+            console.log('Service Worker registration failed:', err);
+            });
         }
     </script>
 </body>
