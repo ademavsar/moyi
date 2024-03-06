@@ -3,7 +3,8 @@ dil öğrenimim için anki ve benzeri flascard uygulamalarında videolu flashcar
 
 desteleri oluşturmak için yazdığım **[split-video-by-srt-using-ffmpeg](https://github.com/ademavsar/split-video-by-srt-using-ffmpeg)** scripti ile video bölümleme yapabilir ve oluşturduğunuz dosyaları "deck" klasörüne taşıyarak kendi çalışma destenizi oluşturabilirsiniz.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ohlDFgKh-KU?si=i6MXtbsQ5p4WaZZ4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+https://www.youtube.com/embed/ohlDFgKh-KU?si=i6MXtbsQ5p4WaZZ4
+[![YouTube](/static/moyi_cover.png)](https://www.youtube.com/embed/ohlDFgKh-KU?si=i6MXtbsQ5p4WaZZ4)
 
 ## girizgâh
 moyi, video içerikli flashcard'lar aracılığıyla dil öğrenmeyi eğlenceli ve etkili bir hale getiren, yerel sunucuda çalışan basit bir uygulamadır. 
