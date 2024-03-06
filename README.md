@@ -3,7 +3,7 @@ dil öğrenimim için anki ve benzeri flascard uygulamalarında videolu flashcar
 
 desteleri oluşturmak için yazdığım **[split-video-by-srt-using-ffmpeg](https://github.com/ademavsar/split-video-by-srt-using-ffmpeg)** scripti ile video bölümleme yapabilir ve oluşturduğunuz dosyaları "deck" klasörüne taşıyarak kendi çalışma destenizi oluşturabilirsiniz.
 
-https://www.youtube.com/embed/ohlDFgKh-KU?si=i6MXtbsQ5p4WaZZ4
+## demo
 [![YouTube](/static/moyi_cover.png)](https://www.youtube.com/embed/ohlDFgKh-KU?si=i6MXtbsQ5p4WaZZ4)
 
 ## girizgâh
