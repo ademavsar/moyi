@@ -43,6 +43,12 @@
 
             &emsp;
 
+            <button id="red" class="toggle-btn" onclick="nextVideo()">
+                <img src="{{ url_for('static', filename='nextVideo.svg') }}" alt="Red">
+            </button>
+
+            &emsp;
+
             <button onclick="togglePlay()" class="btn" id="toggleButton">
                 <img src="{{ url_for('static', filename='cc_off.svg') }}" alt="Cevabı Göster" id="toggleImage">
             </button>
@@ -61,10 +67,6 @@
 
             <button id="green" class="toggle-btn" onclick="window.location.href='/hide_video/{{ current - 1 }}'">
                 <img src="{{ url_for('static', filename='hide_video.svg') }}" alt="Green">
-            </button>
-
-            <button id="red" class="toggle-btn" onclick="nextVideo()">
-                <img src="{{ url_for('static', filename='nextVideo.svg') }}" alt="Red">
             </button>
                                    
         </div>
@@ -87,11 +89,11 @@
         };
     
         function nextVideo() {
-            var currentVideoIndex = {{ current - 1 }};
-            var nextVideoIndex = currentVideoIndex + 1;
-            window.location.href = '/?video_index=' + nextVideoIndex;
+            var totalVideos = {{ total }};
+            var randomVideoIndex = Math.floor(Math.random() * totalVideos);
+            window.location.href = '/?video_index=' + randomVideoIndex;
         }
-    
+
         function updateSubtitles() {
             const currentTime = video.currentTime;
             const currentSubtitle = subtitles.find(sub => currentTime >= sub.start && currentTime <= sub.end);
