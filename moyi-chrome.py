@@ -67,5 +67,5 @@ def video(filename):
     return send_from_directory(VIDEO_FOLDER, filename)
 
 if __name__ == '__main__':
-    subprocess.Popen(["C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"])
+    subprocess.Popen(["C:\Program Files\Google\Chrome\Application\chrome.exe"])
     app.run(debug=False)

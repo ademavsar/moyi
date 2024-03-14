@@ -1,38 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css">
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    
     <title>moyi</title>
-    <style>
-        body { background-color: #3c3c3c; color: white; font-family: Arial, sans-serif; text-align: center; padding-top: 10px; }
-        #videoContainer { position: relative; display: inline-block; }
-        video { cursor: pointer; width: 640px; }
-        #indicator { position: absolute; right: 10px; top: 10px; color: #FFC300; font-size: 14px; }
-        #controls { margin-top: 20px; display: flex; justify-content: center; align-items: center; }
-        .btn, .toggle-btn { cursor: pointer; background-color: transparent; border: none; margin: 0 5px; outline: none; display: flex; align-items: center; }
-        .btn img, .toggle-btn img { height: 36px; }
-        #answerContainer { display: flex; justify-content: center; }
-        #answerBox { display: none; margin-top: 25px; padding: 40px 0; background-color: #444; border-radius: 5px; width: 640px; height: 30px; font-size: 16px; color: white; }
-        #answerBox::selection { background-color: #181818; }
-    </style>
 </head>
 <body>
     {% if video %}
-        <div id="videoContainer">
-            <video id="videoPlayer" autoplay muted>
-                <source src="{{ url_for('video', filename=video) }}" type="video/mp4">
-                Tarayıcınız video etiketini desteklemiyor.
-            </video>
-            <div id="indicator">{{ video.split('.')[0] }}/{{ total }}</div>
-        </div>
-        <div id="controls">
+            <div id="videoContainer">
+                <video id="videoPlayer" class="plyr" controls>
+                    <source src="{{ url_for('video', filename=video) }}" type="video/mp4">
+                    Tarayıcınız video etiketini desteklemiyor.
+                </video>
+                <div id="indicator">{{ video.split('.')[0] }}/{{ total }}</div>
+            </div>
+            <div id="controls">
             <button onclick="window.location.href='/?video_index={{ prev_index }}'" class="btn">
                 <img src="{{ url_for('static', filename='prev_index.svg') }}" alt="Önceki">
             </button>
@@ -68,7 +57,6 @@
             <button id="green" class="toggle-btn" onclick="window.location.href='/hide_video/{{ current - 1 }}'">
                 <img src="{{ url_for('static', filename='hide_video.svg') }}" alt="Green">
             </button>
-                                   
         </div>
         <div id="answerContainer">
             <div id="answerBox"></div>
@@ -77,17 +65,18 @@
     <script>
         const video = document.getElementById('videoPlayer');
         const answerBox = document.getElementById('answerBox');
+        const player = new Plyr('#videoPlayer');
         let subtitles = {{ subtitles|tojson }};
         let currentSubtitleIndex = 0;
-    
-        video.onclick = function() {
-            if (video.paused) {
-                video.play();
-            } else {
-                video.pause();
-            }
-        };
-    
+
+        //video.onclick = function() {
+        //    if (video.paused) {
+        //        video.play();
+        //    } else {
+        //        video.pause();
+        //    }
+        //};
+
         function nextVideo() {
             var totalVideos = {{ total }};
             var randomVideoIndex = Math.floor(Math.random() * totalVideos);
@@ -101,35 +90,35 @@
                 answerBox.textContent = currentSubtitle.text;
                 currentSubtitleIndex = subtitles.indexOf(currentSubtitle);
             }
-    
+
             if (video.ended) {
                 const lastSubtitle = subtitles[subtitles.length - 1];
                 answerBox.textContent = lastSubtitle.text;
                 currentSubtitleIndex = subtitles.length - 1;
             }
         }
-    
+
         function prevSubtitle() {
             if (currentSubtitleIndex > 0) {
                 video.currentTime = subtitles[currentSubtitleIndex - 1].start;
             }
         }
-    
+
         function nextSubtitle() {
             if (currentSubtitleIndex < subtitles.length - 1) {
                 video.currentTime = subtitles[currentSubtitleIndex + 1].start;
             }
         }
-    
+
         function syncSubtitles() {
             updateSubtitles();
             requestAnimationFrame(syncSubtitles);
         }
-    
+
         video.addEventListener('play', () => {
             requestAnimationFrame(syncSubtitles);
         });
-    
+
         window.onload = function() {
             const answerVisibility = localStorage.getItem('answerVisibility') === 'true';
             answerBox.style.display = answerVisibility ? 'block' : 'none';
@@ -137,7 +126,7 @@
             toggleImage.src = answerVisibility ? "{{ url_for('static', filename='cc_on.svg') }}" : "{{ url_for('static', filename='cc_off.svg') }}";
             video.muted = false;
         };
-    
+
         function togglePlay() {
             const isVisible = answerBox.style.display === 'block';
             answerBox.style.display = isVisible ? 'none' : 'block';
@@ -145,13 +134,13 @@
             toggleImage.src = isVisible ? "{{ url_for('static', filename='cc_off.svg') }}" : "{{ url_for('static', filename='cc_on.svg') }}";
             localStorage.setItem('answerVisibility', !isVisible);
         }
-        
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
             .then(function(registration) {
-            console.log('Service Worker registered with scope:', registration.scope);
+                console.log('Service Worker registered with scope:', registration.scope);
             }).catch(function(err) {
-            console.log('Service Worker registration failed:', err);
+                console.log('Service Worker registration failed:', err);
             });
         }
     </script>

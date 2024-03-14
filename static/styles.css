@@ -1,0 +1,68 @@
+body {
+    background-color: #3c3c3c;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#videoContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.plyr, video {
+    width: 640px; /* Genişliği 640px ile sınırlandır */
+    /*height: 480px; /* Yüksekliği 480px olarak ayarla */
+    margin: auto; /* Merkezde hizalama */
+}
+
+#indicator {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #FFC300;
+    font-size: 14px;
+}
+
+#controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn, .toggle-btn {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    margin: 0 5px;
+    outline: none;
+    display: flex;
+    align-items: center;
+}
+
+.btn img, .toggle-btn img {
+    height: 36px;
+}
+
+#answerContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#answerBox {
+    display: none;
+    margin-top: 25px;
+    padding: 40px 0;
+    background-color: #444;
+    border-radius: 5px;
+    width: 640px; /* Cevap kutusunun genişliğini de videoyla aynı yapabilirsiniz */
+    height: 30px;
+    font-size: 18px;
+    color: white;
+}
+
+#answerBox::selection {
+    background-color: #181818;
+}
