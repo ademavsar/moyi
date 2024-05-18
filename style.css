@@ -1,0 +1,61 @@
+body {
+    background-color: #3c3c3c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: white;
+    position: relative;
+}
+
+#dropZone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    margin-top: 20px;
+    background-color: #2e2e2e;
+    color: #ccc;
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+video {
+    width: 80%;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.controls button {
+    background-color: #2e2e2e;
+    color: #ccc;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background-color: #444;
+}
+
+.video-info {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
