@@ -8,10 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevSubtitleButton = document.getElementById('prevSubtitleButton');
     const nextSubtitleButton = document.getElementById('nextSubtitleButton');
     const randomButton = document.getElementById('randomButton');
+    const hideVideoButton = document.getElementById('hideVideoButton'); // Yeni buton
     const textContainer = document.getElementById('textContainer');
     const container = document.querySelector('.container');
     const browse = document.getElementById('browse');
-    const toggleTextContainerButton = document.getElementById('toggleTextContainerButton');
+    const toggleTextContainerButton = document.getElementById('toggleTextContainerButton'); // Mevcut buton
 
     let videoFiles = [];
     let subtitleFiles = {};
@@ -41,6 +42,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Geçerli videoyu gizle butonu
+    hideVideoButton.addEventListener('click', () => {
+        if (videoFiles[currentVideoIndex]) {
+            videoFiles.splice(currentVideoIndex, 1);
+            if (currentVideoIndex >= videoFiles.length) {
+                currentVideoIndex = videoFiles.length - 1;
+            }
+            if (videoFiles.length > 0) {
+                loadVideo(currentVideoIndex, true);
+            } else {
+                videoPlayer.src = '';
+                textContainer.innerHTML = '';
+                videoInfo.textContent = '0/0';
+                // Tüm videolar gizlendiğinde dropZone ekranına dön
+                container.style.display = 'none';
+                dropZone.style.display = 'flex';
+            }
+            updateVideoInfo();
+        }
+    });    
+    
     browse.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (event) => handleFiles(Array.from(event.target.files)));
 
