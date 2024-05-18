@@ -3,6 +3,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
     margin: 0;
     color: white;
@@ -14,20 +15,35 @@ body {
     padding: 20px;
     width: 80%;
     max-width: 800px;
-    margin-top: 20px;
     background-color: #444444;
     color: #ccc;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#dropZone p {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+#dropZone #browse {
+    color: #00aaff;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .container {
     text-align: center;
     margin-top: 20px;
+    width: 80%;
+    max-width: 800px;
 }
 
 video {
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
     margin-bottom: 10px;
 }
 
@@ -35,8 +51,7 @@ video {
     background-color: #444444;
     color: #fff;
     padding: 10px;
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
     margin: 10px auto;
     text-align: center;
     border-radius: 5px;
