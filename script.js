@@ -8,11 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevSubtitleButton = document.getElementById('prevSubtitleButton');
     const nextSubtitleButton = document.getElementById('nextSubtitleButton');
     const randomButton = document.getElementById('randomButton');
-    const hideVideoButton = document.getElementById('hideVideoButton'); // Yeni buton
+    const hideVideoButton = document.getElementById('hideVideoButton');
+    const togglePlayPauseButton = document.getElementById('togglePlayPauseButton');
     const textContainer = document.getElementById('textContainer');
     const container = document.querySelector('.container');
     const browse = document.getElementById('browse');
-    const toggleTextContainerButton = document.getElementById('toggleTextContainerButton'); // Mevcut buton
+    const toggleTextContainerButton = document.getElementById('toggleTextContainerButton');
 
     let videoFiles = [];
     let subtitleFiles = {};
@@ -28,8 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     videoPlayer.addEventListener('click', () => {
         if (videoPlayer.paused) {
             videoPlayer.play();
+            togglePlayPauseButton.querySelector('img').src = 'images/pauseButton.svg'; // Simgeyi güncelle
         } else {
             videoPlayer.pause();
+            togglePlayPauseButton.querySelector('img').src = 'images/playButton.svg'; // Simgeyi güncelle
         }
     });
 
@@ -39,6 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
             textContainer.style.display = 'flex';
         } else {
             textContainer.style.display = 'none';
+        }
+    });
+
+    // Play/Pause butonu işlevselliği
+    togglePlayPauseButton.addEventListener('click', () => {
+        if (videoPlayer.paused) {
+            videoPlayer.play();
+            togglePlayPauseButton.querySelector('img').src = 'images/pauseButton.svg'; // Simgeyi güncelle
+        } else {
+            videoPlayer.pause();
+            togglePlayPauseButton.querySelector('img').src = 'images/playButton.svg'; // Simgeyi güncelle
         }
     });
 
@@ -61,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             updateVideoInfo();
         }
-    });    
-    
+    });
+
     browse.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (event) => handleFiles(Array.from(event.target.files)));
 
