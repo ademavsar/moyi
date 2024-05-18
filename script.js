@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const textContainer = document.getElementById('textContainer');
     const container = document.querySelector('.container');
     const browse = document.getElementById('browse');
+    const toggleTextContainerButton = document.getElementById('toggleTextContainerButton');
 
     let videoFiles = [];
     let subtitleFiles = {};
@@ -22,11 +23,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Video oynatıcıdaki kontrolleri gizle
     videoPlayer.controls = false;
 
-    // Tarayıcıyı açmak için tarayıcı bağlantısı
+    // Mouse sol tık işlevi (oynat/duraklat)
+    videoPlayer.addEventListener('click', () => {
+        if (videoPlayer.paused) {
+            videoPlayer.play();
+        } else {
+            videoPlayer.pause();
+        }
+    });
+
+    // textContainer Göster/Gizle Butonu
+    toggleTextContainerButton.addEventListener('click', () => {
+        if (textContainer.style.display === 'none' || textContainer.style.display === '') {
+            textContainer.style.display = 'flex';
+        } else {
+            textContainer.style.display = 'none';
+        }
+    });
+
     browse.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (event) => handleFiles(Array.from(event.target.files)));
 
-    // Dosyaları işlemek için fonksiyon
     function handleFiles(files) {
         const videoFilesArray = files.filter(file => file.type.startsWith('video/'));
         const subtitleFilesArray = files.filter(file => file.name.endsWith('.srt'));
@@ -49,12 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Video bilgilerini güncellemek için fonksiyon
     function updateVideoInfo() {
         videoInfo.textContent = `${currentVideoIndex + 1}/${videoFiles.length}`;
     }
 
-    // Altyazı gösterimini güncellemek için fonksiyon
     function updateSubtitleDisplay() {
         const videoFile = videoFiles[currentVideoIndex];
         const subtitleFile = subtitleFiles[videoFile.name];
@@ -74,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // SRT dosyasını ayrıştırmak için fonksiyon
     function parseSRT(data) {
         const regex = /(\d+)\s+(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})\s+([\s\S]*?)(?=\n\d+\s|\n*$)/g;
         const subtitles = [];
@@ -89,14 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return subtitles;
     }
 
-    // Zamanı milisaniyeye dönüştürmek için fonksiyon
     function timeToMs(time) {
         const [hours, minutes, seconds] = time.split(':');
         const [secs, millis] = seconds.split(',');
         return (+hours) * 60 * 60 * 1000 + (+minutes) * 60 * 1000 + (+secs) * 1000 + (+millis);
     }
 
-    // Altyazıları göstermek için fonksiyon
     function showSubtitles() {
         const currentTime = videoPlayer.currentTime * 1000;
         const subtitle = subtitles.find(sub => currentTime >= sub.start && currentTime <= sub.end);
@@ -109,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Altyazı senkronizasyonunu başlatmak için fonksiyon
     function startSubtitleSync() {
         if (subtitleInterval) {
             clearInterval(subtitleInterval);
@@ -117,14 +128,12 @@ document.addEventListener('DOMContentLoaded', () => {
         subtitleInterval = setInterval(showSubtitles, 100);
     }
 
-    // Altyazı senkronizasyonunu durdurmak için fonksiyon
     function stopSubtitleSync() {
         if (subtitleInterval) {
             clearInterval(subtitleInterval);
         }
     }
 
-    // Video yüklemek için fonksiyon
     function loadVideo(index, autoplay = false) {
         if (videoFiles[index]) {
             const fileURL = URL.createObjectURL(videoFiles[index]);
@@ -138,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Altyazıya atlamak için fonksiyon
     function jumpToSubtitle(direction) {
         if (subtitles.length === 0) return;
         const currentTime = videoPlayer.currentTime * 1000;
@@ -156,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Rastgele videoya atlamak için fonksiyon
     function jumpToRandomVideo() {
         if (videoFiles.length > 1) {
             let randomIndex;
@@ -166,15 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
             loadVideo(randomIndex, true);
         }
     }
-
-    // Mouse sol tık işlevi (oynat/duraklat)
-    videoPlayer.addEventListener('click', () => {
-        if (videoPlayer.paused) {
-            videoPlayer.play();
-        } else {
-            videoPlayer.pause();
-        }
-    });    
 
     dropZone.addEventListener('dragover', (event) => {
         event.preventDefault();
