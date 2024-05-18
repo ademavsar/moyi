@@ -3,19 +3,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Ekranın tamamını kapsaması için ortalama */
+    justify-content: flex-start; /* Üst kısma taşımak için */
     height: 100vh;
     margin: 0;
     color: white;
     position: relative;
-    overflow: hidden; /* Kaydırma çubuklarını gizlemek için */
+    overflow: auto; /* Kaydırma çubuklarını geri getirmek için */
 }
 
 #dropZone {
-    border: 2px dashed #ccc;
     padding: 20px;
-    width: 100%; /* Genişliği yüzde 100 yapalım */
-    height: 100vh; /* Yüksekliği tam ekran yapalım */
+    width: 100%;
+    height: 100vh;
     background-color: #444444;
     color: #ccc;
     text-align: center;
@@ -23,15 +22,16 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    position: absolute; /* Üstte durmasını sağlamak için konum ayarı */
+    position: absolute;
     top: 0;
     left: 0;
-    overflow: hidden; /* DropZone alanında kaydırma çubuklarını gizlemek için */
+    overflow: auto; /* Kaydırma çubuklarını geri getirmek için */
+    box-sizing: border-box; /* Kesikli çizgileri kaldırmak için */
 }
 
 #dropZone p {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1.5em; /* Metni büyütmek için */
 }
 
 #dropZone #browse {
@@ -42,31 +42,32 @@ body {
 
 .container {
     text-align: center;
-    margin-top: 20px;
-    width: 80%;
-    max-width: 800px;
-    display: none; /* Başlangıçta gizli */
+    margin-top: 0; /* Güncellenmiş üstten uzaklık */
+    width: 92%;
+    max-width: 1000px;
+    display: none;
 }
 
 video {
-    width: 100%;
-    margin-bottom: 10px;
+    width: 92%; /* Video oynatıcı genişliği */
+    margin-bottom: 10px; /* Margin bottom değerini düzeltelim */
 }
 
 .text-container {
     background-color: #444444;
     color: #fff;
     padding: 10px;
-    width: 100%;
+    width: 92%; /* Text-container genişliği */
     margin: 10px auto;
     text-align: center;
     border-radius: 5px;
     display: block;
     user-select: text;
-    height: 60px; /* Sabit yükseklik */
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.4em; /* Altyazı boyutunu büyüttük */
 }
 
 .controls {
@@ -84,8 +85,8 @@ video {
 }
 
 .controls button img {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
 }
 
 .controls button:hover img {
