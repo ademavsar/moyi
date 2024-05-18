@@ -31,6 +31,19 @@ video {
     margin-bottom: 20px;
 }
 
+.text-container {
+    background-color: #f4f4f4;
+    color: #000;
+    padding: 10px;
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
+    border-radius: 5px;
+    display: none; /* Başlangıçta gizli */
+    user-select: text; /* İmleç ile kelime seçimi yapılabilir */
+}
+
 .controls {
     display: flex;
     justify-content: center;
