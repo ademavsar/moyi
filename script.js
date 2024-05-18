@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoInfo = document.getElementById('videoInfo');
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
+    const prevSubtitleButton = document.getElementById('prevSubtitleButton');
+    const nextSubtitleButton = document.getElementById('nextSubtitleButton');
     const textContainer = document.getElementById('textContainer');
 
     let videoFiles = [];
@@ -94,6 +96,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function jumpToSubtitle(direction) {
+        if (subtitles.length === 0) return;
+        const currentTime = videoPlayer.currentTime * 1000;
+        let targetSubtitle;
+
+        if (direction === 'prev') {
+            targetSubtitle = subtitles.slice().reverse().find(sub => sub.end < currentTime);
+        } else if (direction === 'next') {
+            targetSubtitle = subtitles.find(sub => sub.start > currentTime);
+        }
+
+        if (targetSubtitle) {
+            videoPlayer.currentTime = targetSubtitle.start / 1000;
+            showSubtitles();
+        }
+    }
+
     videoPlayer.addEventListener('click', () => {
         if (videoPlayer.paused) {
             videoPlayer.play();
@@ -146,6 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
             loadVideo(currentVideoIndex + 1, true);
         }
     });
+
+    prevSubtitleButton.addEventListener('click', () => jumpToSubtitle('prev'));
+    nextSubtitleButton.addEventListener('click', () => jumpToSubtitle('next'));
 
     updateVideoInfo();
 });
