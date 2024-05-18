@@ -40,8 +40,12 @@ video {
     margin: 20px auto;
     text-align: center;
     border-radius: 5px;
-    display: none; /* Başlangıçta gizli */
-    user-select: text; /* İmleç ile kelime seçimi yapılabilir */
+    display: block;
+    user-select: text;
+    height: 60px; /* Sabit yükseklik */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .controls {

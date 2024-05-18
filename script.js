@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentVideoIndex = 0;
     let subtitles = [];
     let subtitleInterval;
+    let currentSubtitleText = ''; // Mevcut altyazı metni
 
     function updateVideoInfo() {
         videoInfo.textContent = `${currentVideoIndex + 1}/${videoFiles.length}`;
@@ -24,15 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 subtitles = parseSRT(event.target.result);
-                textContainer.style.display = 'block';
+                textContainer.style.display = 'flex';
                 startSubtitleSync();
             };
             reader.readAsText(subtitleFile);
         } else {
             subtitles = [];
-            textContainer.textContent = '';
-            textContainer.style.display = 'none';
-            stopSubtitleSync();
+            textContainer.innerHTML = 'No subtitles available';
+            startSubtitleSync();
         }
     }
 
@@ -59,10 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function showSubtitles() {
         const currentTime = videoPlayer.currentTime * 1000;
         const subtitle = subtitles.find(sub => currentTime >= sub.start && currentTime <= sub.end);
-        if (subtitle) {
+        if (subtitle && subtitle.text !== currentSubtitleText) {
             textContainer.innerHTML = subtitle.text;
-        } else {
+            currentSubtitleText = subtitle.text;
+        } else if (!subtitle && currentSubtitleText !== '') {
             textContainer.innerHTML = '';
+            currentSubtitleText = '';
         }
     }
 
@@ -117,24 +119,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const videoFilesArray = files.filter(file => file.type.startsWith('video/'));
         const subtitleFilesArray = files.filter(file => file.name.endsWith('.srt'));
 
-        let hasSubtitle = false;
         if (videoFilesArray.length > 0) {
             videoFiles = videoFiles.concat(videoFilesArray);
             videoFilesArray.forEach(videoFile => {
                 const matchingSubtitleFile = subtitleFilesArray.find(subFile => subFile.name === videoFile.name.replace(/\.[^/.]+$/, '') + '.srt');
                 if (matchingSubtitleFile) {
                     subtitleFiles[videoFile.name] = matchingSubtitleFile;
-                    hasSubtitle = true;
                 }
             });
             updateVideoInfo();
             loadVideo(0);  // İlk videoyu yükle, ancak otomatik olarak oynatma
-        }
-
-        // Altyazı dosyası yoksa textContainer'ı yine de göster
-        if (!hasSubtitle) {
-            textContainer.style.display = 'block';
-            textContainer.textContent = 'No subtitles available';
+        } else {
+            textContainer.innerHTML = 'No subtitles available';
+            textContainer.style.display = 'flex';
         }
     });
 
