@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.getElementById('nextButton');
     const prevSubtitleButton = document.getElementById('prevSubtitleButton');
     const nextSubtitleButton = document.getElementById('nextSubtitleButton');
+    const randomButton = document.getElementById('randomButton');
     const textContainer = document.getElementById('textContainer');
 
     let videoFiles = [];
@@ -113,6 +114,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function jumpToRandomVideo() {
+        if (videoFiles.length > 1) {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * videoFiles.length);
+            } while (randomIndex === currentVideoIndex);
+            loadVideo(randomIndex, true);
+        }
+    }
+
     videoPlayer.addEventListener('click', () => {
         if (videoPlayer.paused) {
             videoPlayer.play();
@@ -165,6 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
             loadVideo(currentVideoIndex + 1, true);
         }
     });
+
+    randomButton.addEventListener('click', jumpToRandomVideo);
 
     prevSubtitleButton.addEventListener('click', () => jumpToSubtitle('prev'));
     nextSubtitleButton.addEventListener('click', () => jumpToSubtitle('next'));

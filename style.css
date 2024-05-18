@@ -15,7 +15,7 @@ body {
     width: 80%;
     max-width: 800px;
     margin-top: 20px;
-    background-color: #2e2e2e;
+    background-color: #444444;
     color: #ccc;
     text-align: center;
 }
@@ -28,16 +28,16 @@ body {
 video {
     width: 80%;
     max-width: 800px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .text-container {
-    background-color: #f4f4f4;
-    color: #000;
+    background-color: #444444;
+    color: #fff;
     padding: 10px;
     width: 80%;
     max-width: 800px;
-    margin: 20px auto;
+    margin: 10px auto;
     text-align: center;
     border-radius: 5px;
     display: block;
@@ -55,16 +55,20 @@ video {
 }
 
 .controls button {
-    background-color: #2e2e2e;
-    color: #ccc;
+    background-color: transparent;
     border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
     cursor: pointer;
+    margin: 10px 10px;
+    padding: 0;
 }
 
-.controls button:hover {
-    background-color: #444;
+.controls button img {
+    width: 36px;
+    height: 36px;
+}
+
+.controls button:hover img {
+    filter: brightness(1.4);
 }
 
 .video-info {
