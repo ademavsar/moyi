@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateVideoInfo() {
         videoInfo.textContent = `${currentVideoIndex + 1}/${videoFiles.length}`;
+        videoInfo.title = videoFiles[currentVideoIndex] ? videoFiles[currentVideoIndex].name : '';
     }
 
     function updateSubtitleDisplay() {
