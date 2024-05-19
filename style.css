@@ -1,22 +1,22 @@
 body {
-    background-color: #3c3c3c;
+    background-color: var(--background-color);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Üst kısma taşımak için */
+    justify-content: flex-start;
     height: 100vh;
-    margin: 0;
-    color: white;
+    margin: 20px;
     position: relative;
-    overflow: auto; /* Kaydırma çubuklarını geri getirmek için */
+    overflow: auto;
 }
 
 #dropZone {
     padding: 20px;
     width: 100%;
     height: 100vh;
-    background-color: #444444;
-    color: #ccc;
+    background-color: var(--background-color);
+    color: var(--text-color);
     text-align: center;
     display: flex;
     align-items: center;
@@ -25,13 +25,13 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    overflow: auto; /* Kaydırma çubuklarını geri getirmek için */
-    box-sizing: border-box; /* Kesikli çizgileri kaldırmak için */
+    overflow: auto;
+    box-sizing: border-box;
 }
 
 #dropZone p {
     margin: 0;
-    font-size: 1.5em; /* Metni büyütmek için */
+    font-size: 1.5em;
 }
 
 #dropZone #browse {
@@ -42,45 +42,46 @@ body {
 
 .container {
     text-align: center;
-    margin-top: 0; /* Güncellenmiş üstten uzaklık */
-    width: 92%;
+    margin-top: 0;
+    width: 90%;
     max-width: 1000px;
+    background-color: var(--background-color);
+    border: 1px solid transparent;
     display: none;
 }
 
 video {
-    width: 92%; /* Video oynatıcı genişliği */
-    margin-bottom: 10px; /* Margin bottom değerini düzeltelim */
+    width: 85%;
+    margin-bottom: 10px;
 }
 
 .text-container {
-    background-color: #444444;
-    color: #fff;
+    background-color: var(--background-color);
+    color: var(--text-color);
     padding: 10px;
-    width: 92%; /* Text-container genişliği */
-    margin: 10px auto;
+    width: 90%;
+    margin: 0 auto;
     text-align: center;
     border-radius: 5px;
-    display: block;
-    user-select: text;
-    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4em; /* Altyazı boyutunu büyüttük */
+    font-size: 1.4em;
+    user-select: text;
+    height: 60px;
 }
 
 .controls {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .controls button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    margin: 10px 10px;
+    margin: 0 8px;
     padding: 0;
 }
 
@@ -101,4 +102,76 @@ video {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 5px 10px;
     border-radius: 5px;
+}
+
+.toggle-switch {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 25px;
+    --light: #ffffff;
+    --dark: #444444;
+    --link: rgb(27, 129, 112);
+    --link-hover: rgb(24, 94, 82);
+}
+
+.switch-label {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--dark);
+    border-radius: 25px;
+    cursor: pointer;
+    border: 2px solid var(--dark);
+}
+
+.checkbox {
+    position: absolute;
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+.checkbox:checked ~ .slider {
+    background-color: var(--light);
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    box-shadow: inset 6px -2px 0px 0px var(--light);
+    background-color: var(--dark);
+    transition: 0.3s;
+}
+
+.checkbox:checked ~ .slider::before {
+    transform: translateX(25px);
+    background-color: var(--dark);
+    box-shadow: none;
+}
+
+.light-theme {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --container-bg: #ffffff;
+    --container-border: #e0e0e0;
+}
+
+.dark-theme {
+    --background-color: #444444;
+    --text-color: #ffffff;
+    --container-bg: #444444;
+    --container-border: #28292c;
 }

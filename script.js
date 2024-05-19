@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.container');
     const browse = document.getElementById('browse');
     const toggleTextContainerButton = document.getElementById('toggleTextContainerButton');
+    const themeToggleButton = document.querySelector('.toggle-switch .checkbox'); // Tema geçiş butonu
 
     let videoFiles = [];
     let subtitleFiles = {};
@@ -36,6 +37,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Tema geçişi
+    themeToggleButton.addEventListener('change', () => {
+        if (themeToggleButton.checked) {
+            document.body.classList.add('light-theme');
+            document.body.classList.remove('dark-theme');
+        } else {
+            document.body.classList.add('dark-theme');
+            document.body.classList.remove('light-theme');
+        }
+    });
+
+    // Tema geçişi için başlangıç ayarı
+    if (themeToggleButton.checked) {
+        document.body.classList.add('light-theme');
+    } else {
+        document.body.classList.add('dark-theme');
+    }
+
     // textContainer Göster/Gizle Butonu
     toggleTextContainerButton.addEventListener('click', () => {
         if (textContainer.style.display === 'none' || textContainer.style.display === '') {
@@ -43,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             textContainer.style.display = 'none';
         }
-    });
+    });    
 
     // Play/Pause butonu işlevselliği
     togglePlayPauseButton.addEventListener('click', () => {
@@ -181,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoPlayer.play();
             }
         }
-    }
+    }    
 
     function jumpToSubtitle(direction) {
         if (subtitles.length === 0) return;

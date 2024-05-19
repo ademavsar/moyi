@@ -17,7 +17,7 @@
 </head>
 <body>
     <div id="dropZone">
-        <p>Drag-and-drop video and subtitle files to this page, or <span id='browse'>browse</span></p>
+        <p>Drag-and-drop video and subtitle files to this page, or <span id="browse">browse</span></p>
         <input type="file" id="fileInput" style="display: none;" multiple>
     </div>
     <div class="container" style="display: none;">
@@ -28,12 +28,18 @@
             <button id="toggleTextContainerButton"><img src="images/toggleTextContainerButton.svg" alt="Toggle Text Container"></button>
             <button id="prevButton"><img src="images/prevButton.svg" alt="Previous Video"></button>
             <button id="nextButton"><img src="images/nextButton.svg" alt="Next Video"></button>
-            <button id="togglePlayPauseButton"><img src="images/playButton.svg" alt="Play/Pause Video"></button> <!-- Yeni buton eklendi -->
+            <button id="togglePlayPauseButton"><img src="images/playButton.svg" alt="Play/Pause Video"></button>
             <button id="prevSubtitleButton"><img src="images/prevSubtitleButton.svg" alt="Previous Subtitle"></button>
             <button id="nextSubtitleButton"><img src="images/nextSubtitleButton.svg" alt="Next Subtitle"></button>
             <button id="hideVideoButton"><img src="images/hideVideoButton.svg" alt="Hide Video"></button>
             <button id="randomButton"><img src="images/randomButton.svg" alt="Random Video"></button>
         </div>
+    </div>
+    <div class="toggle-switch">
+        <label class="switch-label">
+            <input type="checkbox" class="checkbox">
+            <span class="slider"></span>
+        </label>
     </div>
     <script src="script.js"></script>
 </body>
