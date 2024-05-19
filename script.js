@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let subtitles = [];
     let subtitleInterval;
     let currentSubtitleText = '';
+    let isTextContainerVisible = true;
 
     // Video oynatıcıdaki kontrolleri gizle
     videoPlayer.controls = false;
@@ -59,10 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleTextContainerButton.addEventListener('click', () => {
         if (textContainer.style.display === 'none' || textContainer.style.display === '') {
             textContainer.style.display = 'flex';
+            isTextContainerVisible = true;
         } else {
             textContainer.style.display = 'none';
+            isTextContainerVisible = false;
         }
-    });    
+    });
 
     // Play/Pause butonu işlevselliği
     togglePlayPauseButton.addEventListener('click', () => {
@@ -133,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 subtitles = parseSRT(event.target.result);
-                textContainer.style.display = 'flex';
                 startSubtitleSync();
             };
             reader.readAsText(subtitleFile);
@@ -171,10 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
             textContainer.innerHTML = subtitle.text;
             currentSubtitleText = subtitle.text;
         } else if (!subtitle && currentSubtitleText !== '') {
-            // Eğer altyazı yoksa metni boşaltmak yerine currentSubtitleText'i koru
             currentSubtitleText = ''; // Yine de currentSubtitleText'i boşalt
         }
-    }    
+    }
 
     function startSubtitleSync() {
         if (subtitleInterval) {
@@ -199,8 +200,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (autoplay) {
                 videoPlayer.play();
             }
+            // textContainer'ın görünürlük durumunu ayarla
+            if (isTextContainerVisible) {
+                textContainer.style.display = 'flex';
+            } else {
+                textContainer.style.display = 'none';
+            }
         }
-    }    
+    }
 
     function jumpToSubtitle(direction) {
         if (subtitles.length === 0) return;
