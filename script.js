@@ -171,10 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
             textContainer.innerHTML = subtitle.text;
             currentSubtitleText = subtitle.text;
         } else if (!subtitle && currentSubtitleText !== '') {
-            textContainer.innerHTML = '';
-            currentSubtitleText = '';
+            // Eğer altyazı yoksa metni boşaltmak yerine currentSubtitleText'i koru
+            currentSubtitleText = ''; // Yine de currentSubtitleText'i boşalt
         }
-    }
+    }    
 
     function startSubtitleSync() {
         if (subtitleInterval) {
