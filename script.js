@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const browse = document.getElementById('browse');
     const toggleTextContainerButton = document.getElementById('toggleTextContainerButton');
     const themeToggleButton = document.querySelector('.toggle-switch .checkbox'); // Tema geçiş butonu
+    const muteButton = document.getElementById('muteButton');
 
     let videoFiles = [];
     let subtitleFiles = {};
@@ -99,12 +100,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    muteButton.addEventListener('click', () => {
+        videoPlayer.muted = !videoPlayer.muted;
+        const imgSrc = videoPlayer.muted ? 'images/unmuteButton.svg' : 'images/muteButton.svg';
+        muteButton.querySelector('img').src = imgSrc;
+    });
+
     browse.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (event) => handleFiles(Array.from(event.target.files)));
 
     function handleFiles(files) {
         const videoFilesArray = files.filter(file => file.type.startsWith('video/'));
-        const subtitleFilesArray = files.filter(file => file.name.endsWith('.srt'));
+        const subtitleFilesArray = files.filter(file => file.name.endsWith('.srt') || file.name.endsWith('.vtt'));
 
         if (videoFilesArray.length > 0) {
             videoFiles = videoFiles.concat(videoFilesArray);
